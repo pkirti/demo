@@ -1,35 +1,33 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import Inventory from './components/Inventory';
-import Alerts from './components/Alerts';
-import SalesTrends from './components/SalesTrends';
-import Notification from './components/Notification';
-import Login from './components/Login';
+import { Route, Switch } from 'react-router-dom';
+import { Container, AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import Home from './pages/Home';
+import Inventory from './pages/Inventory';
+import Alerts from './pages/Alerts';
+import SalesTrends from './pages/SalesTrends';
+import UserManagement from './pages/UserManagement';
 
 const App = () => {
   return (
-    <Router>
+    <Container>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            Retail Inventory Management
-          </Typography>
-          <Button color="inherit" component={Link} to="/">Inventory</Button>
-          <Button color="inherit" component={Link} to="/alerts">Alerts</Button>
-          <Button color="inherit" component={Link} to="/sales-trends">Sales Trends</Button>
-          <Button color="inherit" component={Link} to="/notification">Notification</Button>
-          <Button color="inherit" component={Link} to="/login">Login</Button>
+          <Typography variant="h6">Retail Inventory Management</Typography>
+          <Button color="inherit" href="/">Home</Button>
+          <Button color="inherit" href="/inventory">Inventory</Button>
+          <Button color="inherit" href="/alerts">Alerts</Button>
+          <Button color="inherit" href="/sales-trends">Sales Trends</Button>
+          <Button color="inherit" href="/user-management">User Management</Button>
         </Toolbar>
       </AppBar>
       <Switch>
-        <Route exact path="/" component={Inventory} />
+        <Route exact path="/" component={Home} />
+        <Route path="/inventory" component={Inventory} />
         <Route path="/alerts" component={Alerts} />
         <Route path="/sales-trends" component={SalesTrends} />
-        <Route path="/notification" component={Notification} />
-        <Route path="/login" component={Login} />
+        <Route path="/user-management" component={UserManagement} />
       </Switch>
-    </Router>
+    </Container>
   );
 };
 
