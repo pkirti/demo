@@ -1,27 +1,43 @@
 import React, { useState } from 'react';
-import { login } from '../api';
-import { Container, Typography, TextField, Button } from '@mui/material';
+import { TextField, Button, Typography } from '@material-ui/core';
+import axios from 'axios';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const data = await login({ username, password });
-      alert(`Logged in successfully. Token: ${data.access_token}`);
+      const response = await axios.post('http://localhost:8080/token', { username, password });
+      localStorage.setItem('token', response.data.access_token);
+      alert('Login successful');
     } catch (error) {
       console.error('Error logging in:', error);
+      alert('Login failed');
     }
   };
 
   return (
-    <Container>
+    <div>
       <Typography variant="h4">Login</Typography>
-      <TextField label="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Button variant="contained" color="primary" onClick={handleLogin}>Login</Button>
-    </Container>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <Button type="submit" variant="contained" color="primary">Login</Button>
+      </form>
+    </div>
   );
 };
 
